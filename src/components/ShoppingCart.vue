@@ -76,7 +76,6 @@ export default {
     box-sizing: border-box;
     position: relative;
     /* overflow:hidden; */
-    cursor: pointer;
 }
 
 .product-img {

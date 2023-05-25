@@ -1,15 +1,20 @@
-<script>
-import { ref, reactive, watch } from "vue";
-export default {
-  setup(){
-    return {};
-  },
-};
+<script setup>
+import { useRouter } from 'vue-router';
+const router = useRouter();
+
+function launchProduct(){
+    router.push('/launchproduct')
+}
+
+function shoppingcart(){
+    router.push('/shoppingcart')
+}
+
 </script>
 
 <template>
     <div class="container">
-        <table class="function-container">
+        <table class="function-container" @click="launchProduct">
             <tr>
                 <td class="icon-container">
                     <font-awesome-icon icon="fa-solid fa-up-long" class="icon"/>                </td>
@@ -18,7 +23,7 @@ export default {
                 </td>
             </tr>
         </table>
-        <table class="function-container">
+        <table class="function-container" @click="shoppingcart">
             <tr>
                 <td class="icon-container">
                     <font-awesome-icon icon="fa-solid fa-cart-shopping" class="icon"/>
@@ -68,6 +73,7 @@ export default {
     position: relative;
     border-radius: 20px;
     justify-content: center;
+    cursor: pointer;
 }
 
 .icon-container{

@@ -5,18 +5,16 @@
                 <h3 class="header">Welcome to yBooking</h3>
             </div>
             <hr style="width: 100%;">
-            <div class="mid">
+            <form class="mid">
                 <div class="opt">
-                    <form>
-                        <input type="text" placeholder="Email *" required>
-                        <input type="password" placeholder="Password *" required>
-                        <input type="password" placeholder="Confirm your Password *" required>
-                    </form>
+                    <input type="email" placeholder="Email *" required>
+                    <input type="password" placeholder="Password *" required>
+                    <input type="password" placeholder="Confirm your Password *" required>
                 </div>
                 <div class="cbt">
-                    <button>Sign Up</button>
+                    <button type="submit">Sign Up</button>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </template>
@@ -81,7 +79,7 @@ select {
     font-size: 30px;
     font-weight: 55px;
     border: none;
-
+    cursor: pointer;
 }
 #text>p {
     font-size: 12px;

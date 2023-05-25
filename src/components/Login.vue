@@ -5,18 +5,16 @@
                 <h3 class="header">Welcome to yBooking</h3>
             </div>
             <hr style="width: 100%;">
-            <div class="mid">
+            <form class="mid">
                 <div class="opt">
-                    <form>
-                        <input type="text" placeholder="Email">
-                        <input type="password" placeholder="Password">
-                    </form>
+                    <input type="email" placeholder="Email" required>
+                    <input type="password" placeholder="Password" required>
                     <p class="forgot-pwd">Forgot password?</p>
                 </div>
                 <div class="cbt">
-                    <button>Login</button>
+                    <button type="submit">Login</button>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </template>
@@ -31,6 +29,7 @@
     justify-content: center;
     margin-top:  50px;
 }
+
 .header{
     font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif; 
     font-size: 55px; 
@@ -40,6 +39,7 @@
     line-height: 22px;
     text-align: center;
 }
+
 .first {
     border: 3px solid #f53c5e;
     width: 40%;
@@ -47,15 +47,18 @@
     padding-right: 30px;
     border-radius: 5px;
 }
+
 .form {
     width: 95%;
     height: 55px;
     border-radius: 10px 10px 0 0;
 }
+
 select {
     font-size: 40px;
     padding-left: 20px;
 }
+
 .opt input {
     width: 91%;
     height: 55px;
@@ -64,6 +67,7 @@ select {
     padding-left: 20px;
     margin: 20px;
     font-size: 30px;
+    cursor: default;
 }
 
 ::placeholder {
@@ -71,6 +75,7 @@ select {
     padding-left: 10px;
 
 }
+
 .cbt button {
     width: 95%;
     height: 50px;
@@ -81,8 +86,9 @@ select {
     font-size: 30px;
     font-weight: 55px;
     border: none;
-
+    cursor: pointer;
 }
+
 #text>p {
     font-size: 12px;
     margin-top: 8px;
@@ -93,8 +99,14 @@ select {
     font-style: normal;
     font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
 }
+
 .forgot-pwd{
     font-size: 25px;
     margin: 5px 30px 5px 30px;
+}
+
+.forgot-pwd:hover{
+    color: #f53c5e;
+    cursor: pointer;
 }
 </style>

@@ -21,7 +21,18 @@ const router = createRouter({
             path: '/product',
             name: 'product',
             component: ()=>import("./components/Product.vue")
+        },
+        {
+            path: '/launchproduct',
+            name: 'launchproduct',
+            component: ()=>import("./components/LaunchProduct.vue")
+        },
+        {
+            path: '/shoppingcart',
+            name: 'shoppingcart',
+            component: ()=>import("./components/ShoppingCart.vue")
         }
+        
     ],
 });
 export default router;
