@@ -31,8 +31,11 @@ const router = createRouter({
             path: '/shoppingcart',
             name: 'shoppingcart',
             component: ()=>import("./components/ShoppingCart.vue")
-        }
-        
+        },
+        { 
+            path: '/number/:id', 
+            component: ()=>import("./components/ProductDetail.vue") 
+        }  
     ],
 });
 export default router;

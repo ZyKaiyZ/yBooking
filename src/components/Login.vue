@@ -1,3 +1,33 @@
+<script setup>
+import { baseUrl } from '../main';
+import axios from 'axios';
+import Swal from 'sweetalert2';
+import { useRouter } from 'vue-router';
+const router = useRouter();
+
+let email = '';
+let password = '';
+
+function signIn(){
+    console.log(email, password)
+    axios.post(`${baseUrl}/sign_in`,{
+        email: email,
+        password: password
+    })
+    .then( (response) => {
+        const isSuccess = response['data']['code'] === 200 ? true : false;
+        Swal.fire(
+            isSuccess?'Success':'Failure',
+            isSuccess?'Sign in successfully': 'Email or Password is wrong',
+            isSuccess?'success':'error'
+        )
+        if(isSuccess){
+            router.push('/')
+        }
+    })
+    .catch( (error) => console.log(error))
+}
+</script>
 <template>
     <div class="main">
         <div class="first">
@@ -5,14 +35,14 @@
                 <h3 class="header">Welcome to yBooking</h3>
             </div>
             <hr style="width: 100%;">
-            <form class="mid">
+            <form class="mid" @submit.prevent="signIn">
                 <div class="opt">
-                    <input type="email" placeholder="Email" required>
-                    <input type="password" placeholder="Password" required>
+                    <input type="email" placeholder="Email" required v-model="email" autocomplete="username">
+                    <input type="password" placeholder="Password" required v-model="password" autocomplete="current-password">
                     <p class="forgot-pwd">Forgot password?</p>
                 </div>
                 <div class="cbt">
-                    <button type="submit">Login</button>
+                    <button>Login</button>
                 </div>
             </form>
         </div>

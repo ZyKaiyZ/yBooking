@@ -1,45 +1,49 @@
-<script>
-import { ref, reactive, watch } from "vue";
-export default {
-  setup() {
-    const productData = reactive([
-        {
-            img: 'https://a0.muscache.com/im/pictures/cbfa814d-dd89-42c1-ab33-06470bff74d5.jpg?im_w=720',
-            title: 'Fanlu Township, 台灣',
-            date: '6-12 Jan',
-            price: '3300',
-            isLike: false
-        },
-        {
-            img: 'https://a0.muscache.com/im/pictures/4a11ba2e-a04c-4f7a-8983-9a4bd4d1ee50.jpg?im_w=320',
-            title: 'Ren\'ai Township, 台灣',
-            date: '8-14 Jan',
-            price: '4500',
-            isLike: false
-        },
-        {
-            img: 'https://a0.muscache.com/im/pictures/1727c4e5-5ac5-4a23-b607-0fba30985832.jpg?im_w=320',
-            title: 'Puli Township, 台灣',
-            date: '5-10 Jan',
-            price: '4000',
-            isLike: false
-        },
-    ]);
-    
-    const clickLike = (product)=>{
-        product.isLike = product.isLike ? false : true ;
-    }
+<script setup>
+import { useRouter } from 'vue-router';
+const router = useRouter();
 
-    return { productData, clickLike };
-  },
+const productData = [
+    {
+        img: 'https://a0.muscache.com/im/pictures/cbfa814d-dd89-42c1-ab33-06470bff74d5.jpg?im_w=720',
+        title: 'Fanlu Township, 台灣',
+        date: '6-12 Jan',
+        price: '3300',
+        isLike: false,
+        id: '0',
+    },
+    {
+        img: 'https://a0.muscache.com/im/pictures/4a11ba2e-a04c-4f7a-8983-9a4bd4d1ee50.jpg?im_w=320',
+        title: 'Ren\'ai Township, 台灣',
+        date: '8-14 Jan',
+        price: '4500',
+        isLike: false,
+        id: '1',
+    },
+    {
+        img: 'https://a0.muscache.com/im/pictures/1727c4e5-5ac5-4a23-b607-0fba30985832.jpg?im_w=320',
+        title: 'Puli Township, 台灣',
+        date: '5-10 Jan',
+        price: '4000',
+        isLike: false,
+        id: '2',
+    },
+];
+
+const clickProduct = (id) => {
+    router.push(`/number/${id}`);
 };
+
+const clickLike = (product)=>{
+    product.isLike = product.isLike ? false : true ;
+};
+
 </script>
 
 <template>
     <div class="container">
         <div class="product-container" v-for="product in productData" :key="product">
-            <div class="product-img-container">
-                <img class="product-img" :src="product.img" alt="">
+            <div class="product-img-container" >
+                <img class="product-img" :src="product.img" alt="" @click="clickProduct(product.id)">
                 <div class="heart-container">
                     <font-awesome-icon icon="fa-solid fa-heart" class="heart" v-if="product.isLike" @click="clickLike(product)"/>
                     <font-awesome-icon icon="fa-regular fa-heart" class="heart" v-else @click="clickLike(product)"/>

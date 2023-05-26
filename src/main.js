@@ -9,10 +9,13 @@ import { fab } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import VueSweetalert2 from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
+import Vuex from 'vuex';
 
 library.add(fas, far, fab);
 
+export const baseUrl = "http://localhost:5000"
+
 createApp(App)
 .component('font-awesome-icon', FontAwesomeIcon)
-.use(router, VueSweetalert2)
+.use(router, VueSweetalert2, Vuex)
 .mount('#app');
