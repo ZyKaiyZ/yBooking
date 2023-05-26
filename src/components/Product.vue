@@ -46,10 +46,10 @@ function shoppingcart(){
         <table class="function-container">
             <tr>
                 <td class="icon-container">
-                    <font-awesome-icon icon="fa-solid fa-left-long" class="icon"/>
+                    <font-awesome-icon icon="fa-solid fa-down-long" class="icon"/>
                 </td>
                 <td class="function-text">
-                    Return Order
+                    Cancel Launched
                 </td>
             </tr>
         </table>
@@ -83,7 +83,7 @@ function shoppingcart(){
     background-color: white;
     width: 200px;
     height: 200px;
-    border: 5px solid #f53c5e;
+    border: 5px solid #3ca2f5;
     border-radius: 100px;
     transform:scale(1,1);transition: all 1s ease-out;
     margin-bottom: 20px;
@@ -102,6 +102,6 @@ function shoppingcart(){
     margin-top: 20px;
     font-weight: bold;
     font-size: 30px;
-    color: #f53c5e;
+    color: #3ca2f5;
 }
 </style>

@@ -64,7 +64,7 @@ header {
     line-height: 49px;
     padding: 14px 20px;
     float: left;
-    color: #f53c5e;
+    color: #3ca2f5;
     border: 1px solid #DCE0E0;
     border-top: none;
     border-left: none;
@@ -137,7 +137,7 @@ header {
 .main-nav li:hover{
     background-color: #F5F5F5;
     cursor: pointer;
-    color: #f53c5e;
+    color: #3ca2f5;
 }
 
 .main-nav li.product {

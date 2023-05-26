@@ -41,7 +41,7 @@
 }
 
 .first {
-    border: 3px solid #f53c5e;
+    border: 3px solid #3ca2f5;
     width: 40%;
     padding-left: 30px;
     padding-right: 30px;
@@ -80,7 +80,7 @@ select {
     width: 95%;
     height: 50px;
     margin: 20px;
-    background-color: #f53c5e;
+    background-color: #3ca2f5;
     border-radius: 10px;
     color: aliceblue;
     font-size: 30px;
@@ -106,7 +106,7 @@ select {
 }
 
 .forgot-pwd:hover{
-    color: #f53c5e;
+    color: #3ca2f5;
     cursor: pointer;
 }
 </style>

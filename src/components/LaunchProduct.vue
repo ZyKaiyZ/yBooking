@@ -57,7 +57,7 @@ function submitForm() {
     display: inline;
     width: 700px;
     height: 400px;
-    border: 5px solid #f53c5e;
+    border: 5px solid #3ca2f5;
     border-radius: 20px;
 
 }
@@ -98,7 +98,7 @@ function submitForm() {
     width: 100px;
     height: 40px;
     border-radius: 20px;
-    background: #f53c5e;
+    background: #3ca2f5;
     color: white;
     font-weight: bold;
     margin: 15px 300px 0px 300px;

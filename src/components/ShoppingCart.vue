@@ -79,7 +79,7 @@ export default {
 }
 
 .product-img {
-    border: 5px solid #f53c5e;
+    border: 5px solid #3ca2f5;
     border-radius: 20px;
     width: 99%;
     height: 100%;
@@ -96,7 +96,7 @@ export default {
 }
 
 .product-text:hover{
-    color:#f53c5e;
+    color:#3ca2f5;
 }
 
 .product-title{
@@ -106,7 +106,7 @@ export default {
 .heart-container{
     background-color: white;
     border-radius: 0px 15px 0px 15px;
-    border: 5px solid #f53c5e;
+    border: 5px solid #3ca2f5;
     border-top: none;
     border-right: none;
     position: absolute;
@@ -126,7 +126,7 @@ export default {
 }
 
 .heart:hover{
-    color: #f53c5e;
+    color: #3ca2f5;
 }
 
 .product-img-container{
