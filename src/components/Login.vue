@@ -3,13 +3,15 @@ import { baseUrl } from '../main';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
+
 const router = useRouter();
+const store = useStore();
 
 let email = '';
 let password = '';
 
 function signIn(){
-    console.log(email, password)
     axios.post(`${baseUrl}/sign_in`,{
         email: email,
         password: password
@@ -22,10 +24,12 @@ function signIn(){
             isSuccess?'success':'error'
         )
         if(isSuccess){
+            store.dispatch('updateEmail', email);
+            store.dispatch('updateLogin', true);
             router.push('/')
         }
     })
-    .catch( (error) => console.log(error))
+    .catch((error) => console.log(error));
 }
 </script>
 <template>

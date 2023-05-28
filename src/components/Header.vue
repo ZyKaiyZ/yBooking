@@ -1,22 +1,41 @@
 <script setup>
 import { useRouter } from 'vue-router';
+import { computed, watch } from 'vue';
+import { useStore } from 'vuex';
+
 const router = useRouter();
+const store = useStore();
+const email = computed(() => store.state.email);
+const isLogin = computed(() => store.state.isLogin);
+let user = email.value;
+
+watch(isLogin, (newValue) => {
+  if (newValue) {
+    user = computed(() => store.state.email).value;
+  }
+});
 
 function home(){
     router.push('/')
 }
 
 function product(){
-    router.push("/product")
+    router.push("/product");
 }
 
 function signUp(){
-    router.push('/signup')
+    router.push('/signup');
 }
 
 function login(){
-    router.push('/login')
+    router.push('/login');
 }
+
+function signOut(){
+    store.dispatch('updateEmail', '');
+    store.dispatch('updateLogin', false);
+}
+
 </script>
 <template>
     <header>
@@ -24,18 +43,18 @@ function login(){
             yBooking
         </h1>
         <section class="search-bar">
-            <svg class="search-icon" fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-                <path d="M0 0h24v24H0z" fill="none"/>
-            </svg>
+            <font-awesome-icon icon="fa-solid fa-magnifying-glass" class="search-icon" />
             <form class="search-form">
                 <input type="text" placeholder="Where to?">
             </form>
         </section>
         <ul class="main-nav">
-            <li @click="product" class="product">Product</li>
-            <li @click="signUp">Sign Up</li>
-            <li @click="login">Sign in</li>
+            
+            <li v-if="isLogin" @click="product" class="product">Product</li>
+            <li v-if="!isLogin" @click="signUp" class="no-product">Sign Up</li>
+            <li v-else @click="signOut">Sign out</li>
+            <li v-if="isLogin">Hi, {{ user }}</li>
+            <li v-else @click="login">Sign in</li>
         </ul>
     </header>
     
@@ -82,31 +101,37 @@ header {
 }
 
 .search-bar {
-    width: 817px;
-    height: 70%;
+    display: inline-flex;
+    align-items: center;
+    width: 600px;
+    height: 100%;
     border: 1px solid #DCE0E0;
-    padding: 19px 18px;
     float: left;
     border-right-color: transparent;
     border-bottom-color: transparent;
     border-top: none;
+    position: relative;
 }
+
 .search-icon {
     width: 40px;
     height: 40px;
     margin-right: 4px;
-    float: left;
     fill: currentColor;
     color: #D3D5D3;
+    position: absolute;
+    left: 10px;
 }
 .search-form input{
-    width: 730px;
+    width: 100%;
     line-height: 18px;
     font-size: 30px;
     padding: 2px;
-    margin-top: 3px;
     border: transparent;
+    margin-left: 20px;
+    padding-left: 50px;
 }
+
 .search-form input:focus {
     outline: none;
 }
@@ -141,6 +166,10 @@ header {
 }
 
 .main-nav li.product {
+    border-left: 3px solid #DCE0E0;
+}
+
+.main-nav li.no-product{
     border-left: 3px solid #DCE0E0;
 }
 </style>

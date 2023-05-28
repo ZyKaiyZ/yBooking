@@ -1,60 +1,84 @@
 <script setup>
 import { useRouter } from 'vue-router';
+import { reactive, onMounted, watch, computed } from 'vue';
+import axios from 'axios';
+import { baseUrl } from '../main';
+import { useStore } from 'vuex';
+
 const router = useRouter();
+const store = useStore();
+const isLogin = computed(() => store.state.isLogin);
+const email = computed(() => store.state.email);
+let user = email.value;
+let productList = reactive([]);
 
-const productData = [
-    {
-        img: 'https://a0.muscache.com/im/pictures/cbfa814d-dd89-42c1-ab33-06470bff74d5.jpg?im_w=720',
-        title: 'Fanlu Township, 台灣',
-        date: '6-12 Jan',
-        price: '3300',
-        isLike: false,
-        id: '0',
-    },
-    {
-        img: 'https://a0.muscache.com/im/pictures/4a11ba2e-a04c-4f7a-8983-9a4bd4d1ee50.jpg?im_w=320',
-        title: 'Ren\'ai Township, 台灣',
-        date: '8-14 Jan',
-        price: '4500',
-        isLike: false,
-        id: '1',
-    },
-    {
-        img: 'https://a0.muscache.com/im/pictures/1727c4e5-5ac5-4a23-b607-0fba30985832.jpg?im_w=320',
-        title: 'Puli Township, 台灣',
-        date: '5-10 Jan',
-        price: '4000',
-        isLike: false,
-        id: '2',
-    },
-];
+onMounted(() => {
+  loadProductList();
+});
 
-const clickProduct = (id) => {
-    router.push(`/number/${id}`);
+const loadProductList = async () => {
+  try {
+    const response = await axios.post(`${baseUrl}/get_products_and_likes`, {
+      user: user
+    });
+    productList.value = response.data.data.map((product) => {
+      const startDate = formatDate(product.start_date);
+      const endDate = formatDate(product.end_date);
+      return {
+        ...product,
+        start_date: startDate,
+        end_date: endDate
+      };
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const month = date.toLocaleString('en-US', { month: 'short' });
+    const day = date.getDate();
+    return `${month} ${day}`;
+};
+
+const clickProduct = (product) => {
+    router.push(`/number/${product.id}`);
 };
 
 const clickLike = (product)=>{
-    product.isLike = product.isLike ? false : true ;
+    if(!isLogin.value){
+        router.push('/login');
+    }
+    else{
+        console.log(computed(() => store.state.email).value, product.product_id);
+        axios.post(`${baseUrl}/update_likes`,{
+            user: computed(() => store.state.email).value,
+            product_id : product.product_id
+        })
+        .catch((err)=>{console.error(err)});
+        loadProductList()
+    }
 };
 
 </script>
 
 <template>
     <div class="container">
-        <div class="product-container" v-for="product in productData" :key="product">
+        <div class="product-container" v-for="product in productList.value" :key="product.id">
             <div class="product-img-container" >
-                <img class="product-img" :src="product.img" alt="" @click="clickProduct(product.id)">
+                <img class="product-img" :src="product.img" alt="" @click="clickProduct(product)">
                 <div class="heart-container">
-                    <font-awesome-icon icon="fa-solid fa-heart" class="heart" v-if="product.isLike" @click="clickLike(product)"/>
+                    <font-awesome-icon icon="fa-solid fa-heart" class="heart" v-if="product.is_like" @click="clickLike(product)"/>
                     <font-awesome-icon icon="fa-regular fa-heart" class="heart" v-else @click="clickLike(product)"/>
                 </div>
             </div>
             <div class="product-text">
                 <tr class="product-title">
-                    <td>{{ product.title }}</td>
+                    <td>{{ `${product.city}, ${product.country}` }}</td>
                 </tr>
                 <tr>
-                    <td>{{ product.date }}</td>
+                    <td>{{ `${product.start_date} - ${product.end_date}` }}</td>
                 </tr>
                 <tr>
                     <td>${{ product.price }} TWD per night</td>

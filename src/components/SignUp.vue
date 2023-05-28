@@ -1,3 +1,45 @@
+<script setup>
+import { baseUrl } from '../main';
+import axios from 'axios';
+import Swal from 'sweetalert2';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
+
+const router = useRouter();
+const store = useStore();
+
+let email = '', password = '', password2 = '';
+
+function signUp(){
+    if (password === password2){
+        axios.post(`${baseUrl}/sign_up`,{
+            email: email,
+            password: password
+        })
+        .then( (response) => {
+            const isSuccess = response['data']['code'] === 200 ? true : false;
+            Swal.fire(
+                isSuccess?'Success':'Failure',
+                isSuccess?'Sign up successfully': 'Email already in use',
+                isSuccess?'success':'error'
+            )
+            if(isSuccess){
+                store.dispatch('updateEmail', email);
+                store.dispatch('updateLogin', true);
+                router.push('/')
+            }
+        })
+        .catch((error) => console.log(error))
+    }
+    else{
+        Swal.fire(
+            'Failure',
+            'Passwords do not match',
+            'error'
+        )
+    }
+}
+</script>
 <template>
     <div class="main">
         <div class="first">
@@ -5,11 +47,11 @@
                 <h3 class="header">Welcome to yBooking</h3>
             </div>
             <hr style="width: 100%;">
-            <form class="mid">
+            <form class="mid" @submit.prevent="signUp">
                 <div class="opt">
-                    <input type="email" placeholder="Email *" required>
-                    <input type="password" placeholder="Password *" required>
-                    <input type="password" placeholder="Confirm your Password *" required>
+                    <input type="email" placeholder="Email *" required v-model="email">
+                    <input type="password" placeholder="Password *" required v-model="password">
+                    <input type="password" placeholder="Confirm your Password *" required v-model="password2">
                 </div>
                 <div class="cbt">
                     <button type="submit">Sign Up</button>

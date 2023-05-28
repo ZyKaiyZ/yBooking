@@ -3,11 +3,11 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 
 function launchProduct(){
-    router.push('/launchproduct')
+    router.push('/launchproduct');
 }
 
 function shoppingcart(){
-    router.push('/shoppingcart')
+    router.push('/shoppingcart');
 }
 
 </script>

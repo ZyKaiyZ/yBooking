@@ -1,5 +1,5 @@
 <script>
-import { ref, reactive, watch } from "vue";
+import { reactive } from "vue";
 export default {
   setup() {
     const productData = reactive([
