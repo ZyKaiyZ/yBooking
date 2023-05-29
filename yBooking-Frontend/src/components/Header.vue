@@ -34,6 +34,7 @@ function login(){
 function signOut(){
     store.dispatch('updateEmail', '');
     store.dispatch('updateLogin', false);
+    router.push('/login')
 }
 
 </script>

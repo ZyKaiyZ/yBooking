@@ -13,7 +13,7 @@ dist-ssr
 *.local
 
 # Editor directories and files
-.vscode/*
+yBooking-Frontend/.vscode/*
 !.vscode/extensions.json
 .idea
 .DS_Store
@@ -22,3 +22,13 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+#db
+db_data/
+
+#private
+.env
+.well-known
+
+#pycache
+__pycache__/

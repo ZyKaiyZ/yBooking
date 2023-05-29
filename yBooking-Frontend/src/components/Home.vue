@@ -43,7 +43,7 @@ const formatDate = (dateString) => {
 };
 
 const clickProduct = (product) => {
-    router.push(`/number/${product.id}`);
+    router.push(`/product/${product.product_id}`);
 };
 
 const clickLike = (product)=>{
@@ -51,7 +51,6 @@ const clickLike = (product)=>{
         router.push('/login');
     }
     else{
-        console.log(computed(() => store.state.email).value, product.product_id);
         axios.post(`${baseUrl}/update_likes`,{
             user: computed(() => store.state.email).value,
             product_id : product.product_id

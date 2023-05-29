@@ -33,7 +33,7 @@ const router = createRouter({
             component: ()=>import("./components/ShoppingCart.vue")
         },
         { 
-            path: '/number/:id', 
+            path: '/product/:id', 
             component: ()=>import("./components/ProductDetail.vue") 
         }  
     ],
