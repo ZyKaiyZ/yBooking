@@ -58,7 +58,7 @@ def lanuch_product():
 @app.route("/get_products",methods=["GET"])
 def get_products():
     database = SQLManager()
-    sql = "SELECT * FROM `products`"
+    sql = "SELECT * FROM `products` WHERE `del_flag` != 1"
     data_list = database.get_list(sql)
     if data_list is not None:
         database.close()
@@ -66,7 +66,7 @@ def get_products():
     else:
         database.close()
         return { "code": 400, "status": "failure", "data": "" }
-    
+
 @app.route("/get_product",methods=["POST"])
 def get_product():
     database = SQLManager()
@@ -137,6 +137,42 @@ def get_products_and_likes():
     else:
         database.close()
         return { "code": 400, "status": "failure", "data": "" }
+
+@app.route("/order_product",methods=["POST"])
+def order_product():
+    database = SQLManager()
+    data = request.get_json()
+    product_id = data.get('product_id')
+    user = data.get('user')
+    sql = "INSERT INTO `product_order`(`product_id`, `user`) VALUES (%s, %s)"
+    database.moddify(sql, (product_id, user))
+    sql = "UPDATE `products` SET `del_flag`= %s WHERE `product_id`= %s"
+    database.moddify(sql, (1, product_id))
+    database.close()
+    return { "code": 200, "status": "success", "data": data }
+
+@app.route("/get_order_product",methods=["POST"])
+def get_order_product():
+    database = SQLManager()
+    data = request.get_json()
+    user = data.get('user')
+    sql = "SELECT * FROM `products` WHERE `product_id` IN (SELECT `product_id` FROM `product_order` WHERE `user`=%s)"
+    data_list = database.get_list(sql, user)
+    database.close()
+    return { "code": 200, "status": "success", "data": data_list }
+
+@app.route("/cancel_order",methods=["POST"])
+def cancel_order():
+    database = SQLManager()
+    data = request.get_json()
+    product_id = data.get('product_id')
+    user = data.get('user')
+    sql = "UPDATE `products` SET `del_flag` = 0 WHERE `product_id` IN (SELECT `product_id` FROM `product_order` WHERE `user`=%s)"
+    database.moddify(sql, user)
+    sql = "DELETE FROM `product_order` WHERE `product_id` = %s"
+    database.moddify(sql, product_id)
+    database.close()
+    return { "code": 200, "status": "success", "data": "" }
 
 if __name__ == '__main__':
     app.debug = False

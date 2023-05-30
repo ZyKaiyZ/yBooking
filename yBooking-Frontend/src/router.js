@@ -35,7 +35,12 @@ const router = createRouter({
         { 
             path: '/product/:id', 
             component: ()=>import("./components/ProductDetail.vue") 
-        }  
+        },
+        {
+            path: '/order',
+            name: 'order',
+            component: ()=>import("./components/Order.vue")
+        }
     ],
 });
 export default router;

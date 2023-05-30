@@ -12,6 +12,7 @@ const email = computed(() => store.state.email);
 const isLogin = computed(() => store.state.isLogin);
 let user = email.value;
 let product = reactive([]);
+let product_id = router.currentRoute.value.params.id;
 
 function submitForm() {
     if(!isLogin.value){
@@ -20,18 +21,13 @@ function submitForm() {
     else{
         Swal.fire(
             'Success',
-            'Your product has been launched.',
+            'Order successfully',
             'success'
         );
         try {
-            axios.post(`${baseUrl}/lanuch_product`, {
-                country: country.value,
-                city: city.value,
-                start_date: startDate.value,
-                end_date: endDate.value,
-                price: price.value,
-                img: 'https://grinews.com/news/wp-content/uploads/2022/07/ADDY3088.jpg',
-                owner: 'user',
+            axios.post(`${baseUrl}/order_product`, {
+                product_id: product_id,
+                user: user
             })
             .then(()=>{
                 router.push('/');
@@ -52,7 +48,7 @@ function formatDate(dateString) {
 onMounted(async () => {
   try {
     const res = await axios.post(`${baseUrl}/get_product`, {
-      product_id: router.currentRoute.value.params.id
+      product_id: product_id
     });
     product.value = res.data.data;
     product.value.start_date = formatDate(product.value.start_date);

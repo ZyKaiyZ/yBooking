@@ -4,6 +4,7 @@ import { reactive, onMounted, watch, computed } from 'vue';
 import axios from 'axios';
 import { baseUrl } from '../main';
 import { useStore } from 'vuex';
+import Swal from 'sweetalert2'
 
 const router = useRouter();
 const store = useStore();
@@ -18,19 +19,17 @@ onMounted(() => {
 
 const loadProductList = async () => {
   try {
-    const response = await axios.post(`${baseUrl}/get_products_and_likes`, {
-      user: user
+    const response = await axios.post(`${baseUrl}/get_order_product`, {
+        user: user
     });
     productList.value = response.data.data.map((product) => {
-      const startDate = formatDate(product.start_date);
-      const endDate = formatDate(product.end_date);
-      if (product.is_like) {
+        const startDate = formatDate(product.start_date);
+        const endDate = formatDate(product.end_date);
         return {
-          ...product,
-          start_date: startDate,
-          end_date: endDate
+            ...product,
+            start_date: startDate,
+            end_date: endDate
         };
-      }
     }).filter(Boolean);
   } catch (error) {
     console.error(error);
@@ -44,21 +43,22 @@ const formatDate = (dateString) => {
     return `${month} ${day}`;
 };
 
-const clickProduct = (product) => {
-    router.push(`/product/${product.product_id}`);
-};
-
-const clickLike = (product)=>{
+const clickCancel = (product)=>{
     if(!isLogin.value){
         router.push('/login');
     }
     else{
-        axios.post(`${baseUrl}/update_likes`,{
+        Swal.fire(
+            'Success',
+            'Your product has been canceled',
+            'success'
+        );
+        axios.post(`${baseUrl}/cancel_order`,{
             user: computed(() => store.state.email).value,
             product_id : product.product_id
         })
+        .then(()=>loadProductList())
         .catch((err)=>{console.error(err)});
-        loadProductList()
     }
 };
 
@@ -68,10 +68,9 @@ const clickLike = (product)=>{
     <div class="container">
         <div class="product-container" v-for="product in productList.value" :key="product.id" >
             <div class="product-img-container">
-                <img class="product-img" :src="product.img" alt="" @click="clickProduct(product)">
-                <div class="heart-container">
-                    <font-awesome-icon icon="fa-solid fa-heart" class="heart" v-if="product.is_like" @click="clickLike(product)"/>
-                    <font-awesome-icon icon="fa-regular fa-heart" class="heart" v-else @click="clickLike(product)"/>
+                <img class="product-img" :src="product.img" alt="">
+                <div class="heart-container" @click="clickCancel(product)">
+                    <font-awesome-icon icon="fa-solid fa-xmark"  class="heart"/>
                 </div>
             </div>
             <div class="product-text">

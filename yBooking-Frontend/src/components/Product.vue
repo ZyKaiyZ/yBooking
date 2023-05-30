@@ -6,8 +6,12 @@ function launchProduct(){
     router.push('/launchproduct');
 }
 
-function shoppingcart(){
+function shoppingCart(){
     router.push('/shoppingcart');
+}
+
+function yourOrders(){
+    router.push('/order');
 }
 
 </script>
@@ -23,7 +27,7 @@ function shoppingcart(){
                 </td>
             </tr>
         </table>
-        <table class="function-container" @click="shoppingcart">
+        <table class="function-container" @click="shoppingCart">
             <tr>
                 <td class="icon-container">
                     <font-awesome-icon icon="fa-solid fa-cart-shopping" class="icon"/>
@@ -33,13 +37,13 @@ function shoppingcart(){
                 </td>
             </tr>
         </table>
-        <table class="function-container">
+        <table class="function-container" @click="yourOrders">
             <tr>
                 <td class="icon-container">
-                    <font-awesome-icon icon="fa-solid fa-xmark" class="icon"/>
+                    <font-awesome-icon icon="fa-solid fa-clipboard" class="icon"/>
                 </td>
                 <td class="function-text">
-                    Cancel Order
+                    Your Orders
                 </td>
             </tr>
         </table>
@@ -66,7 +70,7 @@ function shoppingcart(){
 
 .function-container {
     display: flex;
-    margin: 25px;
+    margin: 30px;
     width: 300px;
     height: 300px;
     box-sizing: border-box;
@@ -103,5 +107,6 @@ function shoppingcart(){
     font-weight: bold;
     font-size: 30px;
     color: #3ca2f5;
+    text-align: center;
 }
 </style>
