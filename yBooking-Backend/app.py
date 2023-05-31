@@ -8,7 +8,7 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 CORS(app)
 
-@app.route("/sign_up",methods=["POST"])
+@app.route("/api/sign_up",methods=["POST"])
 def sign_up():
     database = SQLManager()
     data = request.get_json()
@@ -24,7 +24,7 @@ def sign_up():
         database.close()
         return { "code": 400, "status": "failure", "data": "" }
 
-@app.route("/sign_in",methods=["POST"])
+@app.route("/api/sign_in",methods=["POST"])
 def sign_in():
     database = SQLManager()
     data = request.get_json()
@@ -38,7 +38,7 @@ def sign_in():
         database.close()
         return { "code": 400, "status": "failure", "data": "" }
 
-@app.route("/lanuch_product",methods=["POST"])
+@app.route("/api/lanuch_product",methods=["POST"])
 def lanuch_product():
     database = SQLManager()
     data = request.get_json()
@@ -55,7 +55,7 @@ def lanuch_product():
     database.close()
     return { "code": 200, "status": "success", "data": "" }
 
-@app.route("/get_products",methods=["GET"])
+@app.route("/api/get_products",methods=["GET"])
 def get_products():
     database = SQLManager()
     sql = "SELECT * FROM `products` WHERE `del_flag` != 1"
@@ -67,7 +67,7 @@ def get_products():
         database.close()
         return { "code": 400, "status": "failure", "data": "" }
 
-@app.route("/get_product",methods=["POST"])
+@app.route("/api/get_product",methods=["POST"])
 def get_product():
     database = SQLManager()
     data = request.get_json()
@@ -81,7 +81,7 @@ def get_product():
         database.close()
         return { "code": 400, "status": "failure", "data": "" }
 
-@app.route("/get_likes",methods=["POST"])
+@app.route("/api/get_likes",methods=["POST"])
 def get_likes():
     database = SQLManager()
     data = request.get_json()
@@ -95,7 +95,7 @@ def get_likes():
         database.close()
         return { "code": 400, "status": "failure", "data": "" }
 
-@app.route("/update_likes",methods=["POST"])
+@app.route("/api/update_likes",methods=["POST"])
 def update_likes():
     database = SQLManager()
     data = request.get_json()
@@ -115,7 +115,7 @@ def update_likes():
     database.close()
     return { "code": 200, "status": "success", "data": data_list }
 
-@app.route("/get_products_and_likes", methods=["POST"])
+@app.route("/api/get_products_and_likes", methods=["POST"])
 def get_products_and_likes():
     database = SQLManager()
     data = request.get_json()
@@ -138,7 +138,7 @@ def get_products_and_likes():
         database.close()
         return { "code": 400, "status": "failure", "data": "" }
 
-@app.route("/order_product",methods=["POST"])
+@app.route("/api/order_product",methods=["POST"])
 def order_product():
     database = SQLManager()
     data = request.get_json()
@@ -151,7 +151,7 @@ def order_product():
     database.close()
     return { "code": 200, "status": "success", "data": data }
 
-@app.route("/get_order_product",methods=["POST"])
+@app.route("/api/get_order_product",methods=["POST"])
 def get_order_product():
     database = SQLManager()
     data = request.get_json()
@@ -161,7 +161,7 @@ def get_order_product():
     database.close()
     return { "code": 200, "status": "success", "data": data_list }
 
-@app.route("/cancel_order",methods=["POST"])
+@app.route("/api/cancel_order",methods=["POST"])
 def cancel_order():
     database = SQLManager()
     data = request.get_json()
@@ -171,6 +171,31 @@ def cancel_order():
     database.moddify(sql, user)
     sql = "DELETE FROM `product_order` WHERE `product_id` = %s"
     database.moddify(sql, product_id)
+    database.close()
+    return { "code": 200, "status": "success", "data": "" }
+
+@app.route("/api/api/get_own_product",methods=["POST"])
+def get_own_product():
+    database = SQLManager()
+    data = request.get_json()
+    user = data.get('user')
+    sql = "SELECT * FROM `products` WHERE `owner`= %s"
+    data_list = database.get_list(sql, user)
+    if data is not None:
+        database.close()
+        return { "code": 200, "status": "success", "data": data_list }
+    else:
+        database.close()
+        return { "code": 400, "status": "failure", "data": "" }
+
+@app.route("/api/cancel_launch",methods=["POST"])
+def cancel_launch():
+    database = SQLManager()
+    data = request.get_json()
+    product_id = data.get('product_id')
+    user = data.get('user')
+    sql = "DELETE FROM `products` WHERE `product_id` = %s and `owner` = %s"
+    database.moddify(sql, (product_id, user))
     database.close()
     return { "code": 200, "status": "success", "data": "" }
 

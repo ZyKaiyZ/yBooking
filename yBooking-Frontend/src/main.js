@@ -14,7 +14,7 @@ import store from './store/index';
 
 library.add(fas, far, fab);
 
-export const baseUrl = "http://localhost:5000";
+export const baseUrl = "http://localhost:5000/api";
 
 createApp(App)
 .component('font-awesome-icon', FontAwesomeIcon)

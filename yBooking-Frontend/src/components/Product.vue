@@ -14,6 +14,10 @@ function yourOrders(){
     router.push('/order');
 }
 
+function cancelLaunchProduct(){
+    router.push('/cancellaunchproduct');
+}
+
 </script>
 
 <template>
@@ -47,7 +51,7 @@ function yourOrders(){
                 </td>
             </tr>
         </table>
-        <table class="function-container">
+        <table class="function-container" @click="cancelLaunchProduct">
             <tr>
                 <td class="icon-container">
                     <font-awesome-icon icon="fa-solid fa-down-long" class="icon"/>

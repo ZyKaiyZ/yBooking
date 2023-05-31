@@ -40,6 +40,11 @@ const router = createRouter({
             path: '/order',
             name: 'order',
             component: ()=>import("./components/Order.vue")
+        },
+        {
+            path: '/cancellaunchproduct',
+            name: 'cancellaunchproduct',
+            component: ()=>import("./components/CancelLaunchProduct.vue")
         }
     ],
 });
