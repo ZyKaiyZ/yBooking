@@ -174,7 +174,7 @@ def cancel_order():
     database.close()
     return { "code": 200, "status": "success", "data": "" }
 
-@app.route("/api/api/get_own_product",methods=["POST"])
+@app.route("/api/get_own_product",methods=["POST"])
 def get_own_product():
     database = SQLManager()
     data = request.get_json()
