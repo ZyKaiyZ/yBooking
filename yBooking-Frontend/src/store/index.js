@@ -3,8 +3,9 @@ import { createStore } from 'vuex';
 const store = createStore({
   state() {
     return {
-      email: "Hello",
-      isLogin: false
+      email: "",
+      isLogin: false,
+      keyword: ""
     };
   },
   mutations: {
@@ -13,6 +14,9 @@ const store = createStore({
     },
     isLogin(state, bool) {
       state.isLogin = bool;
+    },
+    keyword(state, keyword) {
+      state.keyword = keyword;
     }
   },
   actions: {
@@ -21,6 +25,9 @@ const store = createStore({
     },
     updateLogin(context, login) {
       context.commit('isLogin', login);
+    },
+    updateKeyword(context, keyword) {
+      context.commit('keyword', keyword);
     }
   },
   modules: {

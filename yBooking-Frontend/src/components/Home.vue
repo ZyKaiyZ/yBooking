@@ -9,8 +9,29 @@ const router = useRouter();
 const store = useStore();
 const isLogin = computed(() => store.state.isLogin);
 const email = computed(() => store.state.email);
+const keyword = computed(() => store.state.keyword);
 let user = email.value;
 let productList = reactive([]);
+
+watch(keyword, async (newKeyword) => {
+  try {
+    const response = await axios.post(`${baseUrl}/search_product`, {
+      keyword: newKeyword
+    });
+    productList.value = response.data.data.map((product) => {
+      const startDate = formatDate(product.start_date);
+      const endDate = formatDate(product.end_date);
+      return {
+        ...product,
+        start_date: startDate,
+        end_date: endDate
+      };
+    });
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 
 onMounted(() => {
   loadProductList();

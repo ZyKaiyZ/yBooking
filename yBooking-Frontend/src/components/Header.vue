@@ -1,19 +1,32 @@
 <script setup>
 import { useRouter } from 'vue-router';
-import { computed, watch } from 'vue';
+import { computed, watch, ref } from 'vue';
 import { useStore } from 'vuex';
+import { baseUrl } from '../main';
+import axios from 'axios';
 
 const router = useRouter();
 const store = useStore();
 const email = computed(() => store.state.email);
 const isLogin = computed(() => store.state.isLogin);
 let user = email.value;
+let keyword = ref();
+
 
 watch(isLogin, (newValue) => {
   if (newValue) {
     user = computed(() => store.state.email).value;
   }
 });
+watch(keyword, (keyword) =>{
+        store.dispatch('updateKeyword', keyword);
+        // axios.post(`${baseUrl}/search_product`,{
+        //     keyword: keyword
+        // })
+        // .then((res)=>{})
+        // .catch((err)=>{console.error(err)});
+    }
+);
 
 function home(){
     router.push('/')
@@ -46,11 +59,10 @@ function signOut(){
         <section class="search-bar">
             <font-awesome-icon icon="fa-solid fa-magnifying-glass" class="search-icon" />
             <form class="search-form">
-                <input type="text" placeholder="Where to?">
+                <input type="text" placeholder="Where to?" v-model="keyword">
             </form>
         </section>
         <ul class="main-nav">
-            
             <li v-if="isLogin" @click="product" class="product">Product</li>
             <li v-if="!isLogin" @click="signUp" class="no-product">Sign Up</li>
             <li v-else @click="signOut">Sign out</li>

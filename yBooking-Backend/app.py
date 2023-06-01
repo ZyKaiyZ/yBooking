@@ -230,6 +230,20 @@ def edit_product():
     database.close()
     return { "code": 200, "status": "success", "data": "" }
 
+@app.route("/api/search_product",methods=["POST"])
+def search_product():
+    database = SQLManager()
+    data = request.get_json()
+    keyword = data.get('keyword')
+    sql = "SELECT * FROM `products` WHERE `country` LIKE %s OR `city` LIKE %s"
+    data_list = database.get_list(sql, (f"%{keyword}%", f"%{keyword}%"))
+    if data is not None:
+        database.close()
+        return { "code": 200, "status": "success", "data": data_list }
+    else:
+        database.close()
+        return { "code": 400, "status": "failure", "data": "" }
+
 if __name__ == '__main__':
     app.debug = False
     app.run()
