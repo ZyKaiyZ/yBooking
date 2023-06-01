@@ -1,12 +1,12 @@
 # pylint: disable=C0114, W0311, C0301, C0116
 from flask import Flask, request
-from flask_cors import CORS
+#from flask_cors import CORS
 from sql_manager import SQLManager
 
 
 app = Flask(__name__)
-app.config.from_object(__name__)
-CORS(app)
+#app.config.from_object(__name__)
+#CORS(app)
 
 @app.route("/api/sign_up",methods=["POST"])
 def sign_up():

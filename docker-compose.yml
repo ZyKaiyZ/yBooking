@@ -11,6 +11,8 @@ services:
       - 3309:3306
     volumes:
       - ./db_data:/var/lib/mysql
+    networks:
+      - default
   #phpMyAdmin設定
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -21,6 +23,8 @@ services:
       - PMA_ARBITRARY=1
       - PMA_HOST=db
       - PMA_PORT=3306
+    networks:
+      - default
   #前端設定
   frontend:
     build: 
@@ -28,7 +32,9 @@ services:
       dockerfile: Dockerfile
     #restart: always
     ports:
-      - 8888:8888
+      - 80:80
+    networks:
+      - default
   #後端設定
   backend:
     build: 
@@ -38,6 +44,11 @@ services:
     ports:
       - 5000:5000
     command: gunicorn app:app -b 0.0.0.0:5000
-
+    networks:
+      - default
 volumes:
   db_data:
+networks:
+  default:
+    driver: bridge
+
