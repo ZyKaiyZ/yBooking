@@ -74,7 +74,7 @@ function cancelLaunchProduct(){
 
 .function-container {
     display: flex;
-    margin: 30px;
+    margin: 25px;
     width: 300px;
     height: 300px;
     box-sizing: border-box;

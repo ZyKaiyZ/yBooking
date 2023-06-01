@@ -94,6 +94,21 @@ def get_likes():
     else:
         database.close()
         return { "code": 400, "status": "failure", "data": "" }
+    
+@app.route("/api/get_like",methods=["POST"])
+def get_like():
+    database = SQLManager()
+    data = request.get_json()
+    product_id = data.get('product_id')
+    user = data.get('user')
+    sql = "SELECT * FROM `like_list` WHERE `product_id` = %s and `user` = %s"
+    data = database.get_one(sql, (product_id, user))
+    if data is not None:
+        database.close()
+        return { "code": 200, "status": "success", "data": data }
+    else:
+        database.close()
+        return { "code": 400, "status": "failure", "data": "" }
 
 @app.route("/api/update_likes",methods=["POST"])
 def update_likes():

@@ -12,6 +12,7 @@ const email = computed(() => store.state.email);
 const isLogin = computed(() => store.state.isLogin);
 let user = email.value;
 let product = reactive([]);
+let productLike = reactive([]);
 let product_id = router.currentRoute.value.params.id;
 
 function submitForm() {
@@ -56,6 +57,15 @@ onMounted(async () => {
   } catch (error) {
     console.log(error);
   }
+  try {
+    const res = await axios.post(`${baseUrl}/get_like`, {
+      product_id: product_id,
+      user : user
+    });
+    productLike.value = res.data.data;
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 </script>
@@ -87,7 +97,7 @@ onMounted(async () => {
                     <td colspan="2" class="text-small">{{ product.value.price }} &nbsp; TWD </td>
                 </tr>
             </table>
-            <button class="submit-btn" type="submit">Order</button> 
+            <button class="submit-btn" type="submit" v-if="productLike.value">Order</button> 
         </form>
     </div>    
 </template>
