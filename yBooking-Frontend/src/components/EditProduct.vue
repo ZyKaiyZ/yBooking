@@ -62,13 +62,17 @@ const clickCancel = (product)=>{
     }
 };
 
+const clickEdit = (product)=>{
+    router.push(`/editproduct/${product.product_id}`);
+};
+
 </script>
 
 <template>
     <div class="container">
         <div class="product-container" v-for="product in productList.value" :key="product.id" >
             <div class="product-img-container">
-                <img class="product-img" :src="product.img" alt="">
+                <img class="product-img" :src="product.img" alt="" @click="clickEdit(product)">
                 <div class="heart-container" @click="clickCancel(product)">
                     <font-awesome-icon icon="fa-solid fa-xmark"  class="heart"/>
                 </div>

@@ -67,7 +67,7 @@ function submitForm() {
             </tr>
             <tr>
                 <td class="property">Price *</td>
-                <td colspan="2"><input v-model="price" type="text" class="input" required>&nbsp; TWD</td>
+                <td colspan="2"><input v-model="price" type="number" class="input" required>&nbsp; TWD</td>
             </tr>
         </table>
         <button class="submit-btn" type="submit">Launch</button>

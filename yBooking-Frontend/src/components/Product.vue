@@ -14,8 +14,8 @@ function yourOrders(){
     router.push('/order');
 }
 
-function cancelLaunchProduct(){
-    router.push('/cancellaunchproduct');
+function editProduct(){
+    router.push('/editproduct');
 }
 
 </script>
@@ -51,13 +51,13 @@ function cancelLaunchProduct(){
                 </td>
             </tr>
         </table>
-        <table class="function-container" @click="cancelLaunchProduct">
+        <table class="function-container" @click="editProduct">
             <tr>
                 <td class="icon-container">
                     <font-awesome-icon icon="fa-solid fa-down-long" class="icon"/>
                 </td>
                 <td class="function-text">
-                    Cancel Launched
+                    Edit Products
                 </td>
             </tr>
         </table>

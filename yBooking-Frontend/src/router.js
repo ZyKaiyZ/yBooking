@@ -42,9 +42,13 @@ const router = createRouter({
             component: ()=>import("./components/Order.vue")
         },
         {
-            path: '/cancellaunchproduct',
-            name: 'cancellaunchproduct',
-            component: ()=>import("./components/CancelLaunchProduct.vue")
+            path: '/editproduct',
+            name: 'editproduct',
+            component: ()=>import("./components/EditProduct.vue")
+        },
+        {
+            path: '/editproduct/:id',
+            component: ()=>import("./components/EditProductDetail.vue")
         }
     ],
 });

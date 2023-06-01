@@ -214,6 +214,22 @@ def cancel_launch():
     database.close()
     return { "code": 200, "status": "success", "data": "" }
 
+@app.route("/api/edit_product",methods=["POST"])
+def edit_product():
+    database = SQLManager()
+    data = request.get_json()
+    product_id = data.get('product_id')
+    country = data.get('country')
+    city = data.get('city')
+    start_date = data.get('start_date')
+    end_date = data.get('end_date')
+    price = data.get('price')
+    user = data.get('user')
+    sql = "UPDATE `products` SET `country`= %s,`city`= %s,`start_date`= %s,`end_date`= %s, `price`= %s WHERE `product_id` = %s and `owner` = %s"
+    database.moddify(sql, (country, city, start_date, end_date, price, product_id, user))
+    database.close()
+    return { "code": 200, "status": "success", "data": "" }
+
 if __name__ == '__main__':
     app.debug = False
     app.run()
