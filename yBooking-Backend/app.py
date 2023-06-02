@@ -253,7 +253,7 @@ def send_password():
     sql = "SELECT `password` FROM `user` WHERE `email` = %s"
     data = database.get_one(sql, user)
     if data is not None:
-        mail.send_email(user, 'Your Password!', f"Hi,\nYour password: {data['password']}")
+        mail.send_email(user, '【yBooing】 Your Password', f"Hi,\nYour password: {data['password']}")
         database.close()
         return { "code": 200, "status": "success", "data": data }
     else:

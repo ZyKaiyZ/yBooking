@@ -116,7 +116,7 @@ header {
 .search-bar {
     display: inline-flex;
     align-items: center;
-    width: 600px;
+    width: 200px;
     height: 100%;
     border: 1px solid #DCE0E0;
     float: left;
