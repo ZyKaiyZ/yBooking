@@ -1,4 +1,4 @@
-# yBookin
+# yBooking
 
 yBooking is a small project designed to provide a booking platform with basic functionality. Users can browse available listings, make bookings, and manage their own listings. This repository serves as a starting point for building a booking platform.
 
