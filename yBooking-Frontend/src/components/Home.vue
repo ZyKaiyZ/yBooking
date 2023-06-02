@@ -14,21 +14,26 @@ let user = email.value;
 let productList = reactive([]);
 
 watch(keyword, async (newKeyword) => {
-  try {
-    const response = await axios.post(`${baseUrl}/search_product`, {
-      keyword: newKeyword
-    });
-    productList.value = response.data.data.map((product) => {
-      const startDate = formatDate(product.start_date);
-      const endDate = formatDate(product.end_date);
-      return {
-        ...product,
-        start_date: startDate,
-        end_date: endDate
-      };
-    });
-  } catch (error) {
-    console.error(error);
+  if(newKeyword!=''){
+    try {
+      const response = await axios.post(`${baseUrl}/search_product`, {
+        keyword: newKeyword
+      });
+      productList.value = response.data.data.map((product) => {
+        const startDate = formatDate(product.start_date);
+        const endDate = formatDate(product.end_date);
+        return {
+          ...product,
+          start_date: startDate,
+          end_date: endDate
+        };
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  else{
+    loadProductList()
   }
 });
 
