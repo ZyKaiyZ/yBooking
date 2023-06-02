@@ -37,9 +37,9 @@ watch(keyword, async (newKeyword) => {
   }
 });
 
-watch(productList,
-  loadProductList()
-)
+watch(productList, () => {
+  loadProductList();
+});
 
 onMounted(() => {
   loadProductList();
