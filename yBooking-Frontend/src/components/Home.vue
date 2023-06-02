@@ -37,10 +37,6 @@ watch(keyword, async (newKeyword) => {
   }
 });
 
-watch(productList, () => {
-  loadProductList();
-});
-
 onMounted(() => {
   loadProductList();
 });
@@ -76,17 +72,18 @@ const clickProduct = (product) => {
 };
 
 const clickLike = (product)=>{
-    if(!isLogin.value){
-        router.push('/login');
-    }
-    else{
-        axios.post(`${baseUrl}/update_likes`,{
-            user: computed(() => store.state.email).value,
-            product_id : product.product_id
-        })
-        .catch((err)=>{console.error(err)});
-        loadProductList()
-    }
+  loadProductList()
+  if(!isLogin.value){
+      router.push('/login');
+  }
+  else{
+      axios.post(`${baseUrl}/update_likes`,{
+          user: computed(() => store.state.email).value,
+          product_id : product.product_id
+      })
+      .catch((err)=>{console.error(err)});
+      loadProductList()
+  }
 };
 
 </script>
