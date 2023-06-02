@@ -2,7 +2,7 @@
 from flask import Flask, request
 #from flask_cors import CORS
 from sql_manager import SQLManager
-
+from mail_manager import MailManager
 
 app = Flask(__name__)
 #app.config.from_object(__name__)
@@ -237,9 +237,25 @@ def search_product():
     keyword = data.get('keyword')
     sql = "SELECT * FROM `products` WHERE `country` LIKE %s OR `city` LIKE %s"
     data_list = database.get_list(sql, (f"%{keyword}%", f"%{keyword}%"))
-    if data is not None:
+    if data_list is not None:
         database.close()
         return { "code": 200, "status": "success", "data": data_list }
+    else:
+        database.close()
+        return { "code": 400, "status": "failure", "data": "" }
+    
+@app.route("/api/send_password",methods=["POST"])
+def send_password():
+    mail = MailManager(app)
+    database = SQLManager()
+    data = request.get_json()
+    user = data.get('user')
+    sql = "SELECT `password` FROM `user` WHERE `email` = %s"
+    data = database.get_one(sql, user)
+    if data is not None:
+        mail.send_email(user, 'Your Password!', f"Hi,\nYour password: {data['password']}")
+        database.close()
+        return { "code": 200, "status": "success", "data": data }
     else:
         database.close()
         return { "code": 400, "status": "failure", "data": "" }

@@ -31,6 +31,45 @@ function signIn(){
     })
     .catch((error) => console.log(error));
 }
+
+
+function popWindow(){
+    Swal.fire({
+        title: 'Submit your email',
+        input: 'email',
+        inputAttributes: {
+            autocapitalize: 'off'
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Send',
+        showLoaderOnConfirm: true,
+        preConfirm: (email) => {
+            return axios.post(`${baseUrl}/send_password`, { user: email })
+            .then((res)=>{
+                if(res.data.code!==200){
+                    Swal.showValidationMessage(
+                        `Your Email is invalid`
+                    );
+                }
+            })
+            .catch(error => {
+                Swal.showValidationMessage(
+                    `Something is wrong`
+                );
+            });
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+        }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+            title: 'Email sent',
+            text: 'Check your email for further instructions.'
+            });
+        }
+    });
+
+}
+
 </script>
 <template>
     <div class="main">
@@ -43,7 +82,7 @@ function signIn(){
                 <div class="opt">
                     <input type="email" placeholder="Email" required v-model="email" autocomplete="username">
                     <input type="password" placeholder="Password" required v-model="password" autocomplete="current-password">
-                    <p class="forgot-pwd">Forgot password?</p>
+                    <p class="forgot-pwd" @click="popWindow">Forgot password?</p>
                 </div>
                 <div class="cbt">
                     <button>Login</button>
