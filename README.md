@@ -12,6 +12,8 @@ yBooking is a small project designed to provide a booking platform with basic fu
 * Managing favorite accommodations
 * Managing and canceling bookings
 * Password recovery via email
+## Technologies Used
+[![Technologies Used](https://skillicons.dev/icons?i=vue,flask,mysql,azure,nginx,docker)](https://skillicons.dev)
 
 ## Execution
 
