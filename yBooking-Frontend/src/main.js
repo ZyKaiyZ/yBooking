@@ -14,7 +14,7 @@ import store from './store/index';
 
 library.add(fas, far, fab);
 
-export const baseUrl = "http://ybooking.eastus.cloudapp.azure.com/api";
+export const baseUrl = "http://localhost/api";
 
 createApp(App)
 .component('font-awesome-icon', FontAwesomeIcon)

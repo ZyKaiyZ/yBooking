@@ -1,12 +1,9 @@
 # pylint: disable=C0114, W0311, C0301, C0116
 from flask import Flask, request
-#from flask_cors import CORS
 from sql_manager import SQLManager
 from mail_manager import MailManager
 
 app = Flask(__name__)
-#app.config.from_object(__name__)
-#CORS(app)
 
 @app.route("/api/sign_up",methods=["POST"])
 def sign_up():
@@ -243,7 +240,7 @@ def search_product():
     else:
         database.close()
         return { "code": 400, "status": "failure", "data": "" }
-    
+ 
 @app.route("/api/send_password",methods=["POST"])
 def send_password():
     mail = MailManager(app)
